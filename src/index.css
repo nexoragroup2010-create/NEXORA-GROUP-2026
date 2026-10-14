@@ -13,6 +13,7 @@
 
 @layer base {
   html {
+    color-scheme: dark;
     background: var(--nx-black);
     color: var(--nx-white);
     -webkit-font-smoothing: antialiased;

@@ -1,0 +1,214 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --nx-blue: #1f4e9c;
+  --nx-glow: #3b7bea;
+  --nx-black: #05070d;
+  --nx-card: #0d111a;
+  --nx-white: #f5f7fa;
+  --nx-gray: #8a93a6;
+}
+
+@layer base {
+  html {
+    background: var(--nx-black);
+    color: var(--nx-white);
+    -webkit-font-smoothing: antialiased;
+  }
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+  body {
+    @apply font-sans text-nx-white;
+    overflow-x: hidden;
+  }
+  ::selection {
+    background: var(--nx-glow);
+    color: var(--nx-white);
+  }
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--nx-black);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--nx-blue), var(--nx-glow));
+    border-radius: 8px;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .has-custom-cursor,
+    .has-custom-cursor * {
+      cursor: none !important;
+    }
+  }
+}
+
+@layer components {
+  .glass {
+    background: linear-gradient(145deg, rgba(13, 17, 26, 0.72), rgba(13, 17, 26, 0.4));
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(59, 123, 234, 0.22);
+    box-shadow: inset 0 1px 0 rgba(245, 247, 250, 0.04), 0 20px 50px -20px rgba(5, 7, 13, 0.9);
+  }
+  .text-gradient {
+    background: linear-gradient(120deg, #f5f7fa 0%, #3b7bea 55%, #1f4e9c 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .text-glow {
+    text-shadow: 0 0 18px rgba(59, 123, 234, 0.65), 0 0 50px rgba(59, 123, 234, 0.25);
+  }
+  .section {
+    @apply relative mx-auto w-full max-w-7xl px-5 py-24 sm:px-8 md:py-32;
+  }
+  .eyebrow {
+    @apply inline-flex items-center gap-2 font-display text-[11px] uppercase tracking-[0.35em] text-nx-glow;
+  }
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-nx-gradient px-7 py-3 font-display text-xs font-semibold uppercase tracking-[0.2em] text-nx-white shadow-glow transition-all duration-300;
+  }
+  .btn-primary:hover {
+    @apply -translate-y-0.5 shadow-glow-lg;
+  }
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 30%, rgba(245, 247, 250, 0.35) 50%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform 0.7s ease;
+  }
+  .btn-primary:hover::after {
+    transform: translateX(120%);
+  }
+  .btn-ghost {
+    @apply relative inline-flex items-center justify-center gap-2 rounded-full border border-nx-glow/40 bg-nx-card/40 px-7 py-3 font-display text-xs font-semibold uppercase tracking-[0.2em] text-nx-white backdrop-blur-md transition-all duration-300;
+  }
+  .btn-ghost:hover {
+    @apply -translate-y-0.5 border-nx-glow bg-nx-blue/20 shadow-glow;
+  }
+  .input {
+    @apply w-full rounded-xl border border-nx-glow/20 bg-nx-black/60 px-4 py-3 text-sm text-nx-white placeholder-nx-gray/60 outline-none transition-all duration-300 focus:border-nx-glow focus:shadow-glow;
+  }
+}
+
+/* ---------- Glitch ---------- */
+.glitch {
+  position: relative;
+  display: inline-block;
+}
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.8;
+}
+.glitch::before {
+  color: var(--nx-glow);
+  -webkit-text-fill-color: var(--nx-glow);
+  animation: glitch-a 3.2s infinite steps(1);
+  clip-path: inset(0 0 60% 0);
+}
+.glitch::after {
+  color: var(--nx-blue);
+  -webkit-text-fill-color: var(--nx-blue);
+  animation: glitch-b 2.7s infinite steps(1);
+  clip-path: inset(55% 0 0 0);
+}
+@keyframes glitch-a {
+  0%, 86%, 100% { transform: translate(0); opacity: 0; }
+  87% { transform: translate(-4px, -1px); opacity: 0.85; clip-path: inset(10% 0 70% 0); }
+  90% { transform: translate(3px, 1px); clip-path: inset(40% 0 35% 0); }
+  93% { transform: translate(-2px, 0); clip-path: inset(70% 0 5% 0); }
+  96% { transform: translate(0); opacity: 0; }
+}
+@keyframes glitch-b {
+  0%, 82%, 100% { transform: translate(0); opacity: 0; }
+  83% { transform: translate(4px, 1px); opacity: 0.85; clip-path: inset(60% 0 10% 0); }
+  87% { transform: translate(-3px, -1px); clip-path: inset(20% 0 55% 0); }
+  91% { transform: translate(2px, 0); clip-path: inset(0 0 80% 0); }
+  94% { transform: translate(0); opacity: 0; }
+}
+
+/* ---------- Perspective grid ---------- */
+.perspective-grid {
+  position: absolute;
+  left: -50%;
+  right: -50%;
+  bottom: -10%;
+  height: 70vh;
+  background-image:
+    linear-gradient(rgba(59, 123, 234, 0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 123, 234, 0.18) 1px, transparent 1px);
+  background-size: 64px 64px;
+  transform: perspective(600px) rotateX(62deg);
+  transform-origin: center top;
+  animation: grid-move 6s linear infinite;
+  mask-image: linear-gradient(to bottom, transparent, black 30%, black 60%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 30%, black 60%, transparent);
+}
+@keyframes grid-move {
+  from { background-position: 0 0; }
+  to { background-position: 0 64px; }
+}
+.flat-grid {
+  background-image:
+    linear-gradient(rgba(59, 123, 234, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 123, 234, 0.05) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+.typing-caret::after {
+  content: '';
+  display: inline-block;
+  width: 0.08em;
+  height: 1em;
+  margin-left: 0.08em;
+  vertical-align: -0.12em;
+  background: var(--nx-glow);
+  box-shadow: 0 0 10px var(--nx-glow);
+  animation: caret 1s steps(1) infinite;
+}
+@keyframes caret {
+  50% { opacity: 0; }
+}
+
+.scan-line {
+  background: linear-gradient(to bottom, transparent, rgba(59, 123, 234, 0.08), transparent);
+  animation: scan 7s linear infinite;
+}
+@keyframes scan {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(100vh); }
+}
+
+/* Recharts tweaks */
+.recharts-cartesian-grid line {
+  stroke: rgba(138, 147, 166, 0.12);
+}
+.recharts-text {
+  fill: var(--nx-gray);
+  font-size: 11px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
